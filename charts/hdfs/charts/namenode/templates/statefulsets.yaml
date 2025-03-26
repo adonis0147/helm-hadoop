@@ -1,0 +1,57 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nn
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: namenode
+  serviceName: namenode
+  replicas: {{ .Values.global.num_namenode_replicas }}
+  template:
+    metadata:
+      labels:
+        app: namenode
+    spec:
+      containers:
+        - name: nn
+          image: {{ .Values.global.image }}
+          imagePullPolicy: Never
+          env:
+            - name: HADOOP_ROOT_LOGGER
+              value: INFO,DRFA,console
+          command:
+            - bash
+            - /home/hadoop/scripts/entrypoint.sh
+          volumeMounts:
+            - name: hdfs-conf
+              mountPath: /home/hadoop/hadoop-current/etc/hadoop/hdfs-site.xml
+              subPath: hdfs-site.xml
+            - name: hdfs-conf
+              mountPath: /home/hadoop/hadoop-current/etc/hadoop/core-site.xml
+              subPath: core-site.xml
+            - name: namenode-data
+              mountPath: /data
+            - name: entrypoint
+              mountPath: /home/hadoop/scripts
+      volumes:
+        - name: hdfs-conf
+          configMap:
+            name: hdfs-conf
+        - name: entrypoint
+          configMap:
+            name: namenode-entrypoint
+            items:
+              - key: entrypoint.sh
+                path: entrypoint.sh
+  volumeClaimTemplates:
+    - metadata:
+        name: namenode-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.global.storage.namenode_size }}

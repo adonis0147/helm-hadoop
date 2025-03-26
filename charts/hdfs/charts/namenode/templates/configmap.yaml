@@ -1,0 +1,29 @@
+# https://kubernetes.io/docs/concepts/configuration/configmap/
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: namenode-entrypoint
+  namespace: default
+data:
+  entrypoint.sh: |
+    #!/usr/bin/env bash
+
+    set -e
+
+    nn="$(hostname -f | sed 's/\([^\.]*\).*/\1/')"
+
+    if [[ ! -d /data/hadoop ]]; then
+      if [[ "${nn}" != 'nn-0' ]]; then
+        hdfs namenode -format
+      else
+        hdfs namenode -bootstrapStandby
+      fi
+    fi
+
+    {
+      while ! hdfs haadmin -getAllServiceState 2>/dev/null | awk '{print $NF}' | grep 'active'; do
+        hdfs haadmin -transitionToActive "${nn}"
+      done
+    } &
+
+    hdfs namenode

@@ -1,0 +1,9 @@
+global:
+  image: local/hadoop:latest
+  num_namenode_replicas: 2
+  num_journalnode_replicas: 3
+  num_datanode_replicas: 3
+  storage:
+    namenode_size: 512M
+    journalnode_size: 512M
+    datanode_size: 512M
