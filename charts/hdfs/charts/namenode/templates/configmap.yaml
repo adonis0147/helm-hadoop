@@ -13,7 +13,7 @@ data:
     nn="$(hostname -f | sed 's/\([^\.]*\).*/\1/')"
 
     if [[ ! -d /data/hadoop ]]; then
-      if [[ "${nn}" != 'nn-0' ]]; then
+      if [[ "${nn}" == 'nn-0' ]]; then
         hdfs namenode -format
       else
         hdfs namenode -bootstrapStandby
@@ -21,8 +21,13 @@ data:
     fi
 
     {
-      while ! hdfs haadmin -getAllServiceState 2>/dev/null | awk '{print $NF}' | grep 'active'; do
-        hdfs haadmin -transitionToActive "${nn}"
+      while true; do
+        content="$(hdfs haadmin -getAllServiceState 2>/dev/null | awk '{print $NF}')"
+        if echo "${content}" | grep 'active' &>/dev/null; then
+          break
+        elif [[ "$(echo "${content}" | grep 'standby' | wc -l)" -eq {{ .Values.global.num_namenode_replicas }} ]]; then
+          hdfs haadmin -transitionToActive "${nn}"
+        fi
       done
     } &
 

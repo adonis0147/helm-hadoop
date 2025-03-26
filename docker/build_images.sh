@@ -45,7 +45,7 @@ function download() {
 	fi
 }
 
-function build_hdfs() {
+function build_hadoop() {
 	download 'java'
 	download 'hadoop'
 
@@ -55,7 +55,7 @@ function build_hdfs() {
 }
 
 function main() {
-	build_hdfs
+	build_hadoop
 }
 
 main "${@}"
