@@ -2,6 +2,12 @@
 
 set -e
 
+SCRIPT_PATH="$(
+	cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+	pwd
+)"
+declare -r SCRIPT_PATH
+
 arch="$(uname -m)"
 if [[ "${arch}" == 'arm64' ]]; then
 	arch='aarch64'
@@ -55,7 +61,11 @@ function build_hadoop() {
 }
 
 function main() {
+	pushd "${SCRIPT_PATH}"
+
 	build_hadoop
+
+	popd
 }
 
 main "${@}"
