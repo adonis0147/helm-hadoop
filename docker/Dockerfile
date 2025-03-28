@@ -5,8 +5,8 @@ WORKDIR /tmp
 COPY hadoop-*.tar.gz .
 RUN tar -zxvf hadoop-*.tar.gz -C /
 
-COPY jdk-* .
-RUN tar -zxvf jdk-*.tar.gz -C /
+COPY *jdk*.tar.gz .
+RUN tar -zxvf *jdk*.tar.gz -C /
 
 FROM ubuntu:latest
 
@@ -17,7 +17,7 @@ RUN mkdir -p /home/hadoop
 WORKDIR /home/hadoop
 
 COPY --from=builder /hadoop-* hadoop-current
-COPY --from=builder /jdk-* /opt/java
+COPY --from=builder /amazon-corretto-* /opt/java
 
 RUN mkdir -p cluster-data/hadoop/logs cluster-data/hadoop/pids
 
