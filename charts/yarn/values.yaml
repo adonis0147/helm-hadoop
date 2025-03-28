@@ -1,0 +1,3 @@
+global:
+  image: local/hadoop:latest
+  num_nodemanager_replicas: 3

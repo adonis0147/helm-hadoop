@@ -1,0 +1,47 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nm
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: nodemanager
+  serviceName: nodemanager
+  replicas: {{ .Values.global.num_nodemanager_replicas }}
+  template:
+    metadata:
+      labels:
+        app: nodemanager
+    spec:
+      containers:
+      - name: nm
+        image: {{ .Values.global.image }}
+        imagePullPolicy: Never
+        env:
+          - name: HADOOP_ROOT_LOGGER
+            value: INFO,DRFA,console
+        command:
+          - yarn
+          - nodemanager
+        volumeMounts:
+          - name: yarn-conf
+            mountPath: /home/hadoop/hadoop-current/etc/hadoop/yarn-site.xml
+            subPath: yarn-site.xml
+          - name: yarn-conf
+            mountPath: /home/hadoop/hadoop-current/etc/hadoop/mapred-site.xml
+            subPath: mapred-site.xml
+          - name: hdfs-conf
+            mountPath: /home/hadoop/hadoop-current/etc/hadoop/hdfs-site.xml
+            subPath: hdfs-site.xml
+          - name: hdfs-conf
+            mountPath: /home/hadoop/hadoop-current/etc/hadoop/core-site.xml
+            subPath: core-site.xml
+      volumes:
+        - name: yarn-conf
+          configMap:
+            name: yarn-conf
+        - name: hdfs-conf
+          configMap:
+            name: hdfs-conf
