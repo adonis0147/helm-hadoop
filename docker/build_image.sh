@@ -15,18 +15,18 @@ fi
 
 if [[ "${arch}" == 'x86_64' ]]; then
 	# shellcheck disable=2034
-	declare -r JAVA_URL="https://corretto.aws/downloads/latest/amazon-corretto-8-${arch/86_/}-linux-jdk.tar.gz"
+	declare -r JAVA_URL="https://corretto.aws/downloads/resources/8.452.09.1/amazon-corretto-8.452.09.1-linux-${arch/86_/}.tar.gz"
 	# shellcheck disable=2034
-	declare -r JAVA_SHA256SUM='a21bce3704d96a6577f4aef3b34697e25a2c0efdd39ab49df41f75bf56f775f2'
+	declare -r JAVA_SHA256SUM='7478d4a218d03d68bde6aaba91ad1057d68037c1281b646d4394826cde91b9be'
 	# shellcheck disable=2034
 	declare -r HADOOP_URL='https://archive.apache.org/dist/hadoop/common/hadoop-3.4.0/hadoop-3.4.0.tar.gz'
 	# shellcheck disable=2034
 	declare -r HADOOP_SHA256SUM='e311a78480414030f9ec63549a5d685e69e26f207103d9abf21a48b9dd03c86c'
 else
 	# shellcheck disable=2034
-	declare -r JAVA_URL="https://corretto.aws/downloads/latest/amazon-corretto-8-${arch}-linux-jdk.tar.gz"
+	declare -r JAVA_URL="https://corretto.aws/downloads/resources/8.452.09.1/amazon-corretto-8.452.09.1-linux-${arch}.tar.gz"
 	# shellcheck disable=2034
-	declare -r JAVA_SHA256SUM='cc69cd742377ff6693cc87366739c5adef02ea64133b5e4c6e8dadf6fb509a44'
+	declare -r JAVA_SHA256SUM='b3d959bd1b9e8c82e383a9ae32a7a1ebdfaae4ec99f005ed9cf94275ba46819c'
 	# shellcheck disable=2034
 	declare -r HADOOP_URL="https://archive.apache.org/dist/hadoop/common/hadoop-3.4.0/hadoop-3.4.0-${arch}.tar.gz"
 	# shellcheck disable=2034
