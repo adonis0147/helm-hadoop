@@ -5,8 +5,8 @@ WORKDIR /tmp
 COPY hadoop-*.tar.gz .
 RUN tar -zxvf hadoop-*.tar.gz -C /
 
-COPY *jdk*.tar.gz .
-RUN tar -zxvf *jdk*.tar.gz -C /
+COPY amazon-corretto-*.tar.gz .
+RUN tar -zxvf amazon-corretto-*.tar.gz -C /
 
 FROM ubuntu:latest
 
