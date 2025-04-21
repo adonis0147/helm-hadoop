@@ -10,8 +10,6 @@ RUN tar -zxvf amazon-corretto-*.tar.gz -C /
 
 FROM ubuntu:latest
 
-ARG PASSWORD
-
 RUN mkdir -p /home/hadoop
 
 WORKDIR /home/hadoop
