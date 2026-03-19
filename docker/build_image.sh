@@ -19,18 +19,18 @@ if [[ "${arch}" == 'x86_64' ]]; then
 	# shellcheck disable=2034
 	declare -r JAVA_SHA256SUM='0b4fd441b90471384af288ea7e927897114871c668ad292f4e982e7cb9f0cbf7'
 	# shellcheck disable=2034
-	declare -r HADOOP_URL='https://archive.apache.org/dist/hadoop/common/hadoop-3.4.0/hadoop-3.4.0.tar.gz'
+	declare -r HADOOP_URL='https://archive.apache.org/dist/hadoop/common/hadoop-3.4.3/hadoop-3.4.3.tar.gz'
 	# shellcheck disable=2034
-	declare -r HADOOP_SHA256SUM='e311a78480414030f9ec63549a5d685e69e26f207103d9abf21a48b9dd03c86c'
+	declare -r HADOOP_SHA256SUM='ca65b67a9cdad27b3aa1cb81496a3136de572bab3e8f2289c2aade965f687353'
 else
 	# shellcheck disable=2034
 	declare -r JAVA_URL="https://corretto.aws/downloads/resources/11.0.27.6.1/amazon-corretto-11.0.27.6.1-linux-${arch}.tar.gz"
 	# shellcheck disable=2034
 	declare -r JAVA_SHA256SUM='679ab9f1f614d3ed000b61ccb5e0c06041c9ee29fb9c0ca1b598a9f23975cf85'
 	# shellcheck disable=2034
-	declare -r HADOOP_URL="https://archive.apache.org/dist/hadoop/common/hadoop-3.4.0/hadoop-3.4.0-${arch}.tar.gz"
+	declare -r HADOOP_URL="https://archive.apache.org/dist/hadoop/common/hadoop-3.4.3/hadoop-3.4.3-${arch}.tar.gz"
 	# shellcheck disable=2034
-	declare -r HADOOP_SHA256SUM='416c732ad372c3f03370732fd2fee48fdd69c351ceed500df4c1cef3871a164f'
+	declare -r HADOOP_SHA256SUM='229016c37f7d1f2da43e9712e21236670c8cca3546df99e983e47d8a86860118'
 fi
 
 function download() {
